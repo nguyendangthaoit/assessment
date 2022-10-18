@@ -53,3 +53,9 @@
   height: 20rem;
   width: 100%;
 }
+.is-invalid .rbt-input {
+  border: 1px #dc3545 solid;
+}
+.invalid-feedback {
+  margin-top: -.8rem;
+}
