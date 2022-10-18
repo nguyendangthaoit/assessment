@@ -7,6 +7,10 @@ const Form = (props) => {
 
     const [fields, setFields] = useState({ ...Info });
     const [errors, setErrors] = useState({ ...InfoInvalid });
+    const [images, setImages] = useState([
+        'https://media.istockphoto.com/photos/wild-grass-in-the-mountains-at-sunset-picture-id1322277517?k=20&m=1322277517&s=612x612&w=0&h=ZdxT3aGDGLsOAn3mILBS6FD7ARonKRHe_EKKa-V-Hws=',
+        'https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q='
+    ]);
 
     const handleChange = (e, field) => {
         let fieldsT = { ...fields };
@@ -41,6 +45,28 @@ const Form = (props) => {
     const isDisabledSave = () => {
         return Object.values(fields).some(x => !x) || Object.values(errors).some(x => !!x);
     }
+
+    const addImage = (e) => {
+        e.preventDefault();
+        const input = document.getElementById("fileInputImage");
+        input.click()
+    }
+    const handleChangeImage = (e) => {
+        const formData = new FormData();
+        // Update the formData object 
+        formData.append("file", e.target.files[0]);
+        // api.importExcel(formData)
+        //     .then(res => {
+        //         if (res.data.code == 1) {
+        //             toast.success(".");
+        //             search();
+        //         } else
+        //             toast.warning(res.data.message);
+        //     }).catch((error) => {
+        //         toast.warning(".");
+        //         console.log(error);
+        //     });
+    }
     return (
         <>
             <div className="container form_main">
@@ -72,16 +98,18 @@ const Form = (props) => {
                 </div>
                 <div className="image_main">
                     <div className="row mb-5">
-                        <div className="col-lg-6 mb-3">
-                            <img src="https://media.istockphoto.com/photos/wild-grass-in-the-mountains-at-sunset-picture-id1322277517?k=20&m=1322277517&s=612x612&w=0&h=ZdxT3aGDGLsOAn3mILBS6FD7ARonKRHe_EKKa-V-Hws=" className="img-fluid" alt="..." />
-                        </div>
-                        <div className="col-lg-6">
-                            <img src="https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q=" className="img-fluid" alt="..." />
-                        </div>
+                        {
+                            images.map(e =>
+                                <div className="col-lg-6 mb-3">
+                                    <img key={e} src={e} className="img-fluid" alt="..." />
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
                 <div className="col-lg-12 mb-3 d-flex justify-content-end mb-3">
-                    <button type="button" className="btn btn-light"><i className="fas fa-plus"></i> Add image</button>
+                    <input type="file" hidden id="fileInputImage" onChange={handleChangeImage} accept="image/*" />
+                    <button type="button" className="btn btn-light" onClick={addImage}><i className="fas fa-plus"></i> Add image</button>
                     <button type="button" className="btn btn-primary" disabled={isDisabledSave()}>Save</button>
                 </div>
             </div>
