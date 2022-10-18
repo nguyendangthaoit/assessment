@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+.form_main{
+  margin: 5rem;
+  padding: 5rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.title{
+  text-align: center;
+  font-weight: bold;
+}
+.btn-light{
+  margin-right: .4rem;
+}
+.image_main img{
+  height: 20rem;
+  width: 100%;
+}
