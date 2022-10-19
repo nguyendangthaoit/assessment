@@ -8,10 +8,7 @@ const Form = (props) => {
 
     const [fields, setFields] = useState({ ...Info });
     const [errors, setErrors] = useState({ ...InfoInvalid });
-    const [images, setImages] = useState([
-        'https://media.istockphoto.com/photos/wild-grass-in-the-mountains-at-sunset-picture-id1322277517?k=20&m=1322277517&s=612x612&w=0&h=ZdxT3aGDGLsOAn3mILBS6FD7ARonKRHe_EKKa-V-Hws=',
-        'https://media.istockphoto.com/photos/mountain-landscape-picture-id517188688?k=20&m=517188688&s=612x612&w=0&h=i38qBm2P-6V4vZVEaMy_TaTEaoCMkYhvLCysE7yJQ5Q='
-    ]);
+    const [images, setImages] = useState([]);
 
     const handleChange = (e, field) => {
         let fieldsT = { ...fields };
@@ -66,6 +63,16 @@ const Form = (props) => {
                 toast.warning("upload is unsuccessfull");
             });
     }
+    const save = async () => {
+        await api.save({ ...fields, images }).then(res => {
+            if (res.status === 200) {
+                toast.success('save is successfull');
+            } else
+                toast.warning(res.data.message);
+        }).catch((error) => {
+            toast.warning("save is unsuccessfull");
+        });
+    }
     return (
         <>
             <div className="container form_main">
@@ -109,7 +116,7 @@ const Form = (props) => {
                 <div className="col-lg-12 mb-3 d-flex justify-content-end mb-3">
                     <input type="file" hidden id="fileInputImage" onChange={handleChangeImage} accept="image/*" />
                     <button type="button" className="btn btn-light" onClick={addImage}><i className="fas fa-plus"></i> Add image</button>
-                    <button type="button" className="btn btn-primary" disabled={isDisabledSave()}>Save</button>
+                    <button type="button" className="btn btn-primary" disabled={isDisabledSave()} onClick={save}>Save</button>
                 </div>
             </div>
         </>
