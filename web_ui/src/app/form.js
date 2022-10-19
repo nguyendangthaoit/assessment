@@ -114,7 +114,7 @@ const Form = (props) => {
                         {
                             images.map(e =>
                                 <div className="col-lg-6 mb-3">
-                                    <img key={e} src={e} className="img-fluid" alt="..." />
+                                    <img key={e} src={api.viewImage(e)} className="img-fluid" alt="..." />
                                 </div>
                             )
                         }
