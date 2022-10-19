@@ -37,13 +37,9 @@ class AccountController implements Controller {
 
     private initializeRoutes() {
         this.router
-            .get(this.path + '/detail' + '/:_id', this.detail)
             .post(this.path + "/uploadImage", upload.single("image"), this.uploadImage)
+            .get(this.path + '/getImage' + '/:image', this.getImage)
             .post(this.path + '/save', this.save)
-    }
-
-    private detail = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
-        return response.send();
     }
 
     private uploadImage = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
@@ -57,6 +53,15 @@ class AccountController implements Controller {
             logo_path: request.file.filename
         });
     };
+
+    private getImage = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
+        const image = request.params.image;
+        return response.sendFile(process.cwd() + '/src/uploads/images/' + image, (error) => {
+            if (error)
+                response.send(error.message);
+        });
+    }
+
     private save = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
         try {
             if (request.body) {
