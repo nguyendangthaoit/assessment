@@ -2,7 +2,7 @@ export const Info = {
     firstName: '',
     lastName: '',
     email: '',
-    description: '',
+    description: ''
 };
 
 export const InfoInvalid = {

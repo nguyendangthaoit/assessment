@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { MESSAGESERR } from './constants/common';
 import { Info, InfoInvalid } from './formModel';
-
+import { toast } from 'react-toastify';
+import * as api from './formService';
 
 const Form = (props) => {
 
@@ -53,19 +54,17 @@ const Form = (props) => {
     }
     const handleChangeImage = (e) => {
         const formData = new FormData();
-        // Update the formData object 
-        formData.append("file", e.target.files[0]);
-        // api.importExcel(formData)
-        //     .then(res => {
-        //         if (res.data.code == 1) {
-        //             toast.success(".");
-        //             search();
-        //         } else
-        //             toast.warning(res.data.message);
-        //     }).catch((error) => {
-        //         toast.warning(".");
-        //         console.log(error);
-        //     });
+        formData.append("image", e.target.files[0]);
+        api.uploadImage(formData)
+            .then(res => {
+                if (res.data.logo_path) {
+                    setImages([...images, res.data.logo_path]);
+                    toast.success('upload is successfull');
+                } else
+                    toast.warning(res.data.message);
+            }).catch((error) => {
+                toast.warning("upload is unsuccessfull");
+            });
     }
     return (
         <>
