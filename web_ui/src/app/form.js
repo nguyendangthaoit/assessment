@@ -59,12 +59,12 @@ const Form = (props) => {
                 hideLoad();
                 if (res.data.logo_path) {
                     setImages([...images, res.data.logo_path]);
-                    toast.success('upload is successfull');
+                    toast.success('Uploaded successfully');
                 } else
                     toast.warning(res.data.message);
             }).catch((error) => {
                 hideLoad();
-                toast.warning("upload is unsuccessfull");
+                toast.warning("Uploaded unsuccessfully");
             });
     }
     const save = async () => {
@@ -72,12 +72,12 @@ const Form = (props) => {
         await api.save({ ...fields, images }).then(res => {
             hideLoad();
             if (res.status === 200) {
-                toast.success('save is successfull');
+                toast.success('Saved successfully');
             } else
                 toast.warning(res.data.message);
         }).catch((error) => {
             hideLoad();
-            toast.warning("save is unsuccessfull");
+            toast.warning("Saved unsuccessfully");
         });
     }
     return (
