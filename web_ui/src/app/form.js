@@ -3,6 +3,7 @@ import { MESSAGESERR } from './constants/common';
 import { Info, InfoInvalid } from './formModel';
 import { toast } from 'react-toastify';
 import * as api from './formService';
+import { showLoad, hideLoad } from './constants/loading';
 
 const Form = (props) => {
 
@@ -50,26 +51,32 @@ const Form = (props) => {
         input.click()
     }
     const handleChangeImage = (e) => {
+        showLoad();
         const formData = new FormData();
         formData.append("image", e.target.files[0]);
         api.uploadImage(formData)
             .then(res => {
+                hideLoad();
                 if (res.data.logo_path) {
                     setImages([...images, res.data.logo_path]);
                     toast.success('upload is successfull');
                 } else
                     toast.warning(res.data.message);
             }).catch((error) => {
+                hideLoad();
                 toast.warning("upload is unsuccessfull");
             });
     }
     const save = async () => {
+        showLoad();
         await api.save({ ...fields, images }).then(res => {
+            hideLoad();
             if (res.status === 200) {
                 toast.success('save is successfull');
             } else
                 toast.warning(res.data.message);
         }).catch((error) => {
+            hideLoad();
             toast.warning("save is unsuccessfull");
         });
     }
