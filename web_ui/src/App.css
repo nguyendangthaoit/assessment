@@ -38,7 +38,8 @@
 }
 
 .form_main{
-  margin: 5rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
   padding: 5rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
