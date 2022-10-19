@@ -1,6 +1,6 @@
 import * as nodemailer from 'nodemailer';
 
-export async function SendEmailHelper(emailTo: string, subject: string, content: string, contentHtml: string) {
+export async function SendEmailHelper(emailTo: string, subject: string, content: string, contentHtml: string, attachments: Array<any>) {
 
     let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -15,7 +15,8 @@ export async function SendEmailHelper(emailTo: string, subject: string, content:
         to: emailTo,
         subject: subject,
         text: content,
-        html: contentHtml
+        html: contentHtml,
+        attachments: attachments
     };
     return await transporter.sendMail(mailOptions);
 }
